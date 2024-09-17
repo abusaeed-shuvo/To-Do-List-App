@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+//    id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.kapt")
+
 }
 
 android {
@@ -55,6 +58,19 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.dynamic.features.fragment)
+
+
+    //Room Database
+
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor (libs.room.compiler)
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt (libs.room.compiler)
+
+
+
+
 
 
 

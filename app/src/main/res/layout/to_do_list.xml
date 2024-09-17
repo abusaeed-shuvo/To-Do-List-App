@@ -31,35 +31,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toDoListRecycler">
 
-        <EditText
-            android:id="@+id/editEntryNow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/buttons"
-            android:hint="Write here"
-            android:padding="5dp"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/btnAddNow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnAddNow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/buttons"
-            android:padding="5dp"
-            android:text="Add Now"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnDeleteAll"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnDeleteAll"
@@ -71,7 +42,7 @@
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnAdd"
-            app:layout_constraintStart_toEndOf="@id/btnAddNow"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -83,7 +54,7 @@
             android:background="@color/buttons"
             android:contentDescription="Add Button"
             android:padding="5dp"
-            android:text="Customize"
+            android:text="Add new"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
