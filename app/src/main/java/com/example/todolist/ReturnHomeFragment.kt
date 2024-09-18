@@ -17,6 +17,7 @@ class ReturnHomeFragment : Fragment() {
     ): View {
         binding = FragmentReturnHomeBinding.inflate(inflater, container, false)
         activity?.title = "Completed!"
+
         binding.btnReturnHome.setOnClickListener {
             findNavController().navigate(R.id.action_returnHomeFragment_to_toDoListFragment)
         }

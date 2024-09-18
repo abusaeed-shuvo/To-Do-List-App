@@ -1,8 +1,8 @@
 package com.example.todolist
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.room.Room
@@ -31,26 +31,29 @@ class DoListAdapter : ListAdapter<Note, ToDoListViewHolder>(comparator) {
 
         getItem(position).let {
             holder.binding.apply {
+                val note = Note(it.id, it.title, it.time, it.date, it.entryTime)
                 toDoListTV.text = it.title
                 timeTV.text = it.time
                 dateTV.text = it.date
                 entryTimeTV.text = it.entryTime
+
+
+                btnDelete.setOnClickListener {
+//                    Toast.makeText(it.context, "$note", Toast.LENGTH_SHORT).show()
+                    database = Room.databaseBuilder(it.context, ToDoListDatabase::class.java, "Note-DB")
+                        .allowMainThreadQueries().build()
+
+
+                    database.getNoteDao().deleteData(note)
+
+                }
             }
 
-            holder.binding.btnDelete.setOnClickListener {
 
-//                    database = Room.databaseBuilder(, ToDoListDatabase::class.java, "Note-DB")
-//                        .allowMainThreadQueries().build()
-//
-//                    database.getNoteDao().deleteData(note)
-
-            }
         }
 
 
     }
-
-
 
 
     companion object {
