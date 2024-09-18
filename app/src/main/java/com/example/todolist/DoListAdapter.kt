@@ -1,13 +1,18 @@
 package com.example.todolist
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import androidx.room.Room
 import com.example.todolist.databinding.ListToDoBinding
 
 
 class DoListAdapter : ListAdapter<Note, ToDoListViewHolder>(comparator) {
+
+
+    private lateinit var database: ToDoListDatabase
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoListViewHolder {
 
@@ -23,6 +28,7 @@ class DoListAdapter : ListAdapter<Note, ToDoListViewHolder>(comparator) {
 
     override fun onBindViewHolder(holder: ToDoListViewHolder, position: Int) {
 
+
         getItem(position).let {
             holder.binding.apply {
                 toDoListTV.text = it.title
@@ -33,11 +39,18 @@ class DoListAdapter : ListAdapter<Note, ToDoListViewHolder>(comparator) {
 
             holder.binding.btnDelete.setOnClickListener {
 
+//                    database = Room.databaseBuilder(, ToDoListDatabase::class.java, "Note-DB")
+//                        .allowMainThreadQueries().build()
+//
+//                    database.getNoteDao().deleteData(note)
+
             }
         }
 
 
     }
+
+
 
 
     companion object {

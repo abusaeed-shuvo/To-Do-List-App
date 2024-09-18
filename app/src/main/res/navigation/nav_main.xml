@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_toDoListFragment_to_addNewFragment"
             app:destination="@id/addNewFragment" />
+        <action
+            android:id="@+id/action_toDoListFragment_to_returnHomeFragment"
+            app:destination="@id/returnHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewFragment"
@@ -21,6 +24,15 @@
         tools:layout="@layout/add_new" >
         <action
             android:id="@+id/action_addNewFragment_to_toDoListFragment"
+            app:destination="@id/toDoListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/returnHomeFragment"
+        android:name="com.example.todolist.ReturnHomeFragment"
+        android:label="fragment_return_home"
+        tools:layout="@layout/fragment_return_home" >
+        <action
+            android:id="@+id/action_returnHomeFragment_to_toDoListFragment"
             app:destination="@id/toDoListFragment" />
     </fragment>
 </navigation>

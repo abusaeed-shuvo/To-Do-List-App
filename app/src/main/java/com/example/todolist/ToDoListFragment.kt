@@ -19,19 +19,27 @@ class ToDoListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        activity?.title = "To Do List"
+
         binding = ToDoListBinding.inflate(inflater, container, false)
 
         database = Room.databaseBuilder(requireActivity(), ToDoListDatabase::class.java, "Note-DB")
             .allowMainThreadQueries().build()
+
+
         val notes: List<Note> = database.getNoteDao().getAllData()
         val adapter = DoListAdapter()
         adapter.submitList(notes)
+
+
         binding.toDoListRecycler.adapter = adapter
 
 
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.action_toDoListFragment_to_addNewFragment)
         }
+
 
 
         binding.btnDeleteAll.setOnClickListener {
@@ -42,6 +50,7 @@ class ToDoListFragment : Fragment() {
 
             builder.setPositiveButton("Clear List") { p0, p1 ->
                 database.getNoteDao().nukeTable()
+                findNavController().navigate(R.id.action_toDoListFragment_to_returnHomeFragment)
 
             }
             builder.setNegativeButton("Cancel") { p0, p1 ->
@@ -50,14 +59,9 @@ class ToDoListFragment : Fragment() {
 
             val alertDialog = builder.create()
             alertDialog.show()
-
-
         }
-
-
-
-
-
         return binding.root
     }
+
+
 }

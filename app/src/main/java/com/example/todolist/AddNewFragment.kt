@@ -26,10 +26,14 @@ class AddNewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        activity?.title = "Add New"
+
         binding = AddNewBinding.inflate(inflater, container, false)
 
         database = Room.databaseBuilder(requireActivity(), ToDoListDatabase::class.java, "Note-DB")
             .allowMainThreadQueries().build()
+
+
 
         binding.btnDate.setOnClickListener {
             pickDate()
@@ -98,7 +102,12 @@ class AddNewFragment : Fragment() {
 
         val timePicker = TimePickerDialog(
             requireActivity(), { _, hour, minute ->
-                showTime = "$hour : $minute"
+                hourDisplay = if (hour == 0) {
+                    12
+                } else {
+                    hour
+                }
+                showTime = "$hourDisplay : $minute"
                 binding.btnTime.text = showTime
 
             }, hour, minute, false
