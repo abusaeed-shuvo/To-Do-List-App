@@ -29,11 +29,21 @@ class ToDoListFragment : Fragment() {
 
 
         val notes: List<Note> = database.getNoteDao().getAllData()
-        val adapter = DoListAdapter()
-        adapter.submitList(notes)
+        if (notes.isNotEmpty()){
+            val adapter = DoListAdapter()
+            adapter.submitList(notes)
+            binding.toDoListRecycler.adapter = adapter
+
+            binding.toDoListRecyclerPlaceHolder.visibility=View.GONE
+            binding.toDoListRecycler.visibility=View.VISIBLE
+        }else{
+            binding.toDoListRecyclerPlaceHolder.visibility=View.VISIBLE
+            binding.toDoListRecycler.visibility=View.GONE
+        }
 
 
-        binding.toDoListRecycler.adapter = adapter
+
+
 
 
         binding.btnAdd.setOnClickListener {
@@ -62,6 +72,8 @@ class ToDoListFragment : Fragment() {
         }
         return binding.root
     }
+
+
 
 
 }

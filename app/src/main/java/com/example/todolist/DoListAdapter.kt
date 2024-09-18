@@ -2,7 +2,8 @@ package com.example.todolist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.room.Room
@@ -40,11 +41,30 @@ class DoListAdapter : ListAdapter<Note, ToDoListViewHolder>(comparator) {
 
                 btnDelete.setOnClickListener {
 //                    Toast.makeText(it.context, "$note", Toast.LENGTH_SHORT).show()
-                    database = Room.databaseBuilder(it.context, ToDoListDatabase::class.java, "Note-DB")
-                        .allowMainThreadQueries().build()
+                    database =
+                        Room.databaseBuilder(it.context, ToDoListDatabase::class.java, "Note-DB")
+                            .allowMainThreadQueries().build()
+
+                    val builder = AlertDialog.Builder(it.context)
+                    builder.setTitle("Clear This Entry:")
+                    builder.setMessage("Do you want to clear the ${note.title}?")
+
+                    builder.setPositiveButton("Clear List") { p0, p1 ->
+
+                        database.getNoteDao().deleteData(note)
+
+                        it.findNavController()
+                            .navigate(R.id.action_toDoListFragment_to_returnHomeFragment)
 
 
-                    database.getNoteDao().deleteData(note)
+                    }
+                    builder.setNegativeButton("Cancel") { p0, p1 ->
+                        p0.cancel()
+                    }
+
+                    val alertDialog = builder.create()
+                    alertDialog.show()
+
 
                 }
             }
