@@ -59,6 +59,7 @@ class AddNewFragment : Fragment() {
                 database.getNoteDao().insertData(note)
 
                 Toast.makeText(requireActivity(), "Entry Allowed!", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_addNewFragment_to_toDoListFragment)
 
             } else {
                 Toast.makeText(requireActivity(), "Blank Entry not Allow!", Toast.LENGTH_SHORT)
@@ -67,9 +68,7 @@ class AddNewFragment : Fragment() {
 
 
         }
-        binding.btnReturn.setOnClickListener {
-            findNavController().navigate(R.id.action_addNewFragment_to_toDoListFragment)
-        }
+
 
         return binding.root
     }
