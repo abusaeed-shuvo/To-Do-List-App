@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+
     android:layout_height="wrap_content">
 
 
@@ -35,30 +36,44 @@
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btnDelete"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:background="@color/buttons"
                 android:contentDescription="Delete Button"
                 android:padding="5dp"
                 android:src="@drawable/baseline_delete_24"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btnEdit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btnEdit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@color/buttons"
+                android:contentDescription="Edit Button"
+                android:padding="5dp"
+                android:src="@drawable/baseline_edit_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnDelete" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/potato"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnDelete"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toDoListTV">
 
                 <TextView
                     android:id="@+id/timeTV"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@color/background"
@@ -66,11 +81,15 @@
                     android:text="Time"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toTopOf="@id/entryTimeTV"
+                    app:layout_constraintEnd_toStartOf="@+id/dateTV"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/dateTV"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@color/background"
@@ -78,11 +97,15 @@
                     android:text="Date"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toTopOf="@id/entryTimeTV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/timeTV"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/entryTimeTV"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@color/background"
@@ -90,9 +113,13 @@
                     android:text="Entry Time"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dateTV" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

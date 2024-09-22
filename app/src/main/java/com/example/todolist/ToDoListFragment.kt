@@ -7,38 +7,34 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.room.Room
 import com.example.todolist.databinding.ToDoListBinding
 
-class ToDoListFragment : Fragment() {
+class ToDoListFragment : Fragment(), DoListAdapter.NoteEdit {
     private lateinit var binding: ToDoListBinding
-    private lateinit var database: ToDoListDatabase
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
         activity?.title = "To Do List"
-
         binding = ToDoListBinding.inflate(inflater, container, false)
-
-        database = Room.databaseBuilder(requireActivity(), ToDoListDatabase::class.java, "Note-DB")
-            .allowMainThreadQueries().build()
+        val notes = ToDoListDatabase.getDB(requireContext()).getNoteDao().getAllData()
 
 
-        val notes: List<Note> = database.getNoteDao().getAllData()
-        if (notes.isNotEmpty()){
-            val adapter = DoListAdapter()
+
+        if (notes.isNotEmpty()) {
+            val adapter = DoListAdapter(this)
             adapter.submitList(notes)
             binding.toDoListRecycler.adapter = adapter
 
-            binding.toDoListRecyclerPlaceHolder.visibility=View.GONE
-            binding.toDoListRecycler.visibility=View.VISIBLE
-        }else{
-            binding.toDoListRecyclerPlaceHolder.visibility=View.VISIBLE
-            binding.toDoListRecycler.visibility=View.GONE
+            binding.toDoListRecyclerPlaceHolder.visibility = View.GONE
+            binding.toDoListRecycler.visibility = View.VISIBLE
+        } else {
+            binding.toDoListRecyclerPlaceHolder.visibility = View.VISIBLE
+            binding.toDoListRecycler.visibility = View.GONE
         }
 
 
@@ -47,6 +43,7 @@ class ToDoListFragment : Fragment() {
 
 
         binding.btnAdd.setOnClickListener {
+
             findNavController().navigate(R.id.action_toDoListFragment_to_addNewFragment)
         }
 
@@ -59,7 +56,7 @@ class ToDoListFragment : Fragment() {
             builder.setMessage("Do you want to clear the todo list?")
 
             builder.setPositiveButton("Clear List") { p0, p1 ->
-                database.getNoteDao().nukeTable()
+                ToDoListDatabase.getDB(requireContext()).getNoteDao().nukeTable()
                 findNavController().navigate(R.id.action_toDoListFragment_to_returnHomeFragment)
 
             }
@@ -73,7 +70,21 @@ class ToDoListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onNoteEdit(note: Note) {
 
+        var bundle = Bundle().apply {
+
+            putInt("note", note.id)
+        }
+        findNavController().navigate(R.id.action_toDoListFragment_to_addNewFragment, bundle)
+
+    }
+
+    override fun deleteNote(note: Note) {
+        ToDoListDatabase.getDB(requireContext()).getNoteDao().deleteData(note)
+
+        findNavController().navigate(R.id.action_toDoListFragment_to_returnHomeFragment)
+    }
 
 
 }

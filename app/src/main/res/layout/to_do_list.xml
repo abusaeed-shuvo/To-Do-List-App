@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/foreground"
     android:orientation="vertical"
+    android:accessibilityPaneTitle="To Do List"
     tools:context=".ToDoListFragment">
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,19 +1,23 @@
 package com.example.todolist
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.room.Room
 import com.example.todolist.databinding.ListToDoBinding
 
 
-class DoListAdapter : ListAdapter<Note, ToDoListViewHolder>(comparator) {
+class DoListAdapter(var noteEdit: NoteEdit) : ListAdapter<Note, ToDoListViewHolder>(comparator) {
 
 
-    private lateinit var database: ToDoListDatabase
+    interface NoteEdit {
+
+        fun onNoteEdit(note: Note)
+
+        fun deleteNote(note: Note)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoListViewHolder {
 
@@ -34,28 +38,32 @@ class DoListAdapter : ListAdapter<Note, ToDoListViewHolder>(comparator) {
             holder.binding.apply {
                 val note = Note(it.id, it.title, it.time, it.date, it.entryTime)
                 toDoListTV.text = it.title
-                timeTV.text = it.time
-                dateTV.text = it.date
+                if (it.time != "00:00") {
+                    timeTV.text = it.time
+                } else {
+                    timeTV.visibility = View.GONE
+                }
+                if (it.date != "00:00:0000") {
+                    dateTV.text = it.date
+                } else {
+                    dateTV.visibility = View.GONE
+                }
+
                 entryTimeTV.text = it.entryTime
+
+                btnEdit.setOnClickListener { _ ->
+                    noteEdit.onNoteEdit(note)
+                }
 
 
                 btnDelete.setOnClickListener {
-//                    Toast.makeText(it.context, "$note", Toast.LENGTH_SHORT).show()
-                    database =
-                        Room.databaseBuilder(it.context, ToDoListDatabase::class.java, "Note-DB")
-                            .allowMainThreadQueries().build()
-
                     val builder = AlertDialog.Builder(it.context)
                     builder.setTitle("Clear This Entry:")
-                    builder.setMessage("Do you want to clear the ${note.title}?")
+                    builder.setMessage("Do you want to delete this entry?")
 
-                    builder.setPositiveButton("Clear List") { p0, p1 ->
+                    builder.setPositiveButton("Delete") { p0, p1 ->
 
-                        database.getNoteDao().deleteData(note)
-
-                        it.findNavController()
-                            .navigate(R.id.action_toDoListFragment_to_returnHomeFragment)
-
+                        noteEdit.deleteNote(note)
 
                     }
                     builder.setNegativeButton("Cancel") { p0, p1 ->
