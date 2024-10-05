@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.example.todolist"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.todolist"
@@ -63,7 +63,6 @@ dependencies {
     //Room Database
 
     implementation(libs.androidx.room.runtime)
-    annotationProcessor (libs.room.compiler)
 
     // To use Kotlin annotation processing tool (kapt)
     kapt (libs.room.compiler)
